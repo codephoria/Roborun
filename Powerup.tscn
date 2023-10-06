@@ -1,0 +1,47 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://assets/powerup/disintegrate01.png" type="Texture" id=1]
+[ext_resource path="res://assets/powerup/disintegrate03.png" type="Texture" id=2]
+[ext_resource path="res://assets/powerup/disintegrate00.png" type="Texture" id=3]
+[ext_resource path="res://assets/powerup/disintegrate09.png" type="Texture" id=4]
+[ext_resource path="res://assets/powerup/disintegrate07.png" type="Texture" id=5]
+[ext_resource path="res://assets/powerup/disintegrate04.png" type="Texture" id=6]
+[ext_resource path="res://assets/powerup/disintegrate06.png" type="Texture" id=7]
+[ext_resource path="res://assets/powerup/disintegrate02.png" type="Texture" id=8]
+[ext_resource path="res://assets/powerup/disintegrate10.png" type="Texture" id=9]
+[ext_resource path="res://assets/powerup/disintegrate08.png" type="Texture" id=10]
+[ext_resource path="res://assets/powerup/disintegrate05.png" type="Texture" id=11]
+[ext_resource path="res://Powerup.gd" type="Script" id=12]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 8 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 11 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 10 ), ExtResource( 4 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 12.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 29.5605
+
+[node name="Powerup" type="Area2D" groups=[
+"power",
+]]
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="SelfDestructionTimer" type="Timer" parent="."]
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="timeout" from="SelfDestructionTimer" to="." method="_on_SelfDestructionTimer_timeout"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

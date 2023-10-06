@@ -1,0 +1,115 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/StalinistOne-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/BarSystem/BarBackground.png" type="Texture" id=2]
+[ext_resource path="res://assets/BarSystem/BlueBar.png" type="Texture" id=3]
+[ext_resource path="res://assets/BarSystem/BarGlass.png" type="Texture" id=4]
+[ext_resource path="res://HUD.gd" type="Script" id=5]
+[ext_resource path="res://assets/robot/character_robot_cheer0.png" type="Texture" id=6]
+[ext_resource path="res://assets/robot/character_robot_cheer1.png" type="Texture" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 36
+extra_spacing_bottom = 15
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 5 )
+
+[node name="MessageLabel" type="Label" parent="."]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -111.0
+margin_bottom = 111.0
+custom_fonts/font = SubResource( 1 )
+text = ">><<
+RoboRun
+>><<"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
+anchor_right = 1.0
+margin_bottom = 171.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = -33
+custom_constants/margin_left = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 20.0
+margin_top = -33.0
+margin_right = 460.0
+margin_bottom = 171.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChargingProgress" type="TextureProgress" parent="MarginContainer/HBoxContainer"]
+margin_right = 204.0
+margin_bottom = 204.0
+size_flags_vertical = 6
+step = 0.5
+texture_under = ExtResource( 2 )
+texture_over = ExtResource( 4 )
+texture_progress = ExtResource( 3 )
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+margin_left = 208.0
+margin_top = 67.0
+margin_right = 440.0
+margin_bottom = 136.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+text = "0:00"
+align = 2
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -139.0
+margin_top = -170.0
+margin_right = 139.0
+margin_bottom = -70.0
+custom_fonts/font = SubResource( 3 )
+text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheeringRobot" type="AnimatedSprite" parent="."]
+frames = SubResource( 4 )
+frame = 1
+playing = true
+[connection signal="timeout" from="MessageTimer" to="." method="_on_MessageTimer_timeout"]
+[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
